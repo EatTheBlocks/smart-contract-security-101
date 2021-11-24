@@ -1,0 +1,46 @@
+Congratulations on reaching the end of the course!
+
+In this final project you are going to be challenged to put together much of what
+we've seen. 
+
+You'll find two contracts: EtbToken and EtbDex. They are fully functional, but vulnerable.
+Also, in the test folder, a file named final-project-test.js with some 
+boilerplate code to help you a little.
+
+EtbToken is a simple implementation of a mintable and burnable ERC20 (ETBT).
+EtbDex is a simple Exchange, through which users can purchase the token.
+
+Both EtbToken and EtbDex are supposed to be deployed by the same account (deployer on tests).
+
+The exchange rate is 1 ETH / 1 ETBT.
+The initial supply of ETBT is 1000 * 10 ** 18 ETBT, addressed to the deployer. 
+
+To buy a token, a user must send an ETH transaction to the EtbDex, and should receive 
+in exchange the same amount in ETBT, minus a small fee, kept by the contract. 
+The owner of EtbDex can withdraw the accumulated fees whenever he or she wants. 
+The fee should be set by the Owner.
+
+A user can also sell tokens and receive an equal amount of ether. Tokens will be burned
+ and minted again but addressed to the owner of ETBT.
+
+What you should do, in this order:
+
+1 - Comment every line you think could suffer from a vulnerability.
+2 - Write a complete test suite for every function on both contracts, happy and unhappy path.
+3 - Fix each one of the vulnerabilities. You have the tests to be sure you didn't brake 
+anything. It's possible that you will need to re-write some or write new ones.
+4 - Once you feel linke it, take a look to our proposed solution on the 
+final-project-solution folder. You'll also find a final-project-test-solution to compare
+your approach.
+
+Vulnerabilities you should look for:
+- DoS
+- Reentrancy
+- Not Checking return of low level call
+- Lack of Access control 
+- Overflow
+- Confidentiality
+... and more.
+
+Have fun!
+Julián Zamt
