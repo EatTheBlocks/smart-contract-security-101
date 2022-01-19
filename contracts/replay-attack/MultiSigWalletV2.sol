@@ -32,7 +32,7 @@ contract MultiSigWalletV2 {
     require(!executed[firstSig] && !executed[secondSig], "Signature expired");
 
     executed[firstSig] = true;
-    executed[secondSig] = true;3+-
+    executed[secondSig] = true;
 
     bool signaturesChecked = false;
 
