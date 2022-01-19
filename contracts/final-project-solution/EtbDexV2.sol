@@ -27,7 +27,7 @@ contract EtbDexV2 is Ownable {
     require(_etbToken.balanceOf(msg.sender) >= _amount, "Not enough tokens");
     _etbToken.burn(msg.sender, _amount);
     _etbToken.mint(_amount);
-    withdrawals[msg.sender] = _amount;
+    withdrawals[msg.sender] += _amount;
   }
 
   function setFee(uint256 _fee) external onlyOwner {

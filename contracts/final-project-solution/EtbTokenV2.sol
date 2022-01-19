@@ -3,15 +3,6 @@ pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-/* 
-Posibles bugs que hay son:
-- En el mint no hay un onlyOwner()
-- burn no debería ser onlyOwner
-- Tampoco en el approve
-- En el transfer y transferFrom no se valida overflow
-- En el burn y en el mint no se valida under and over flow
-- tx.origin 
-*/
 contract EtbTokenV2 is Ownable {
   address public etbDex;
   uint256 public totalSupply;
