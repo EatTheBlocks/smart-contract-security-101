@@ -4,7 +4,7 @@ In this final project you are going to be challenged to put together much of wha
 we've seen. 
 
 You'll find two contracts: EtbToken and EtbDex. They are fully functional, but vulnerable.
-Also, in the test folder, a file named final-project-test.js with some 
+Also, in the test-fill-the-blanks folder, a file named final-project-test.js with some
 boilerplate code to help you a little.
 
 EtbToken is a simple implementation of a mintable and burnable ERC20 (ETBT).
@@ -29,8 +29,8 @@ What you should do, in this order:
 2 - Write a complete test suite for every function on both contracts, happy and unhappy path.
 3 - Fix each one of the vulnerabilities. You have the tests to be sure you didn't brake 
 anything. It's possible that you will need to re-write some or write new ones.
-4 - Once you feel linke it, take a look to our proposed solution on the 
-final-project-solution folder. You'll also find a final-project-test-solution to compare
+4 - Once you feel like it, take a look to our proposed solution on the 
+final-project-solution folder. You'll also find a final-project-test-solution.js to compare
 your approach.
 
 Vulnerabilities you should look for:
